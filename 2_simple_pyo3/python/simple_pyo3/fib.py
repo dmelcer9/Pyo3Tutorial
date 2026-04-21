@@ -1,5 +1,7 @@
 from timeit import timeit
 
+from simple_pyo3.native import fib as fib_native
+
 def fib(n):
     if n < 2:
         return n
@@ -9,3 +11,4 @@ def fib(n):
 
 if __name__ == '__main__':
     print(timeit(lambda: fib(35), number=1))
+    print(timeit(lambda: fib_native(35), number=1))

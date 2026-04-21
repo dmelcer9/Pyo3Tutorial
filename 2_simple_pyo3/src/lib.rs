@@ -1,8 +1,10 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 use pyo3_stub_gen::define_stub_info_gatherer;
+use pyo3_stub_gen::derive::gen_stub_pyfunction;
 
 #[pyfunction]
+#[gen_stub_pyfunction]
 fn fib(val: u64) -> u64 {
     if val < 2 {
         return 1;
