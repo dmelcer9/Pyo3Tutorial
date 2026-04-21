@@ -1,0 +1,5 @@
+- Intro to rust
+  - Values vs references
+  - Moving and lifetimes
+- Example Python project - simple case 
+- Example Python project - with structs that hold python objects
