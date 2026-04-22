@@ -5,13 +5,13 @@ use pyo3_stub_gen::define_stub_info_gatherer;
 use pyo3_stub_gen::derive::{gen_stub_pyclass, gen_stub_pyfunction, gen_stub_pymethods};
 
 #[derive(Clone)]
-enum TreeImpl {
-    Leaf{ key: i64, values: Vec<Arc<Py<PyAny>>>},
-    Node{ pivot: i64, left: Arc<TreeImpl>, right: Arc<TreeImpl>}
+enum TreeImpl<T:Clone> {
+    Leaf{ key: i64, values: Vec<T>},
+    Node{ pivot: i64, left: Arc<TreeImpl<T>>, right: Arc<TreeImpl<T>>}
 }
 
-impl TreeImpl {
-    pub fn search(&self, key: i64) -> Option<&Vec<Arc<Py<PyAny>>>> {
+impl <T:Clone> TreeImpl<T> {
+    pub fn search(&self, key: i64) -> Option<&Vec<T>> {
         match self {
             TreeImpl::Leaf{ key: k, values } => {
                 if *k == key {
@@ -30,7 +30,7 @@ impl TreeImpl {
         }
     }
 
-    pub fn add(&self, key: i64, value: Py<PyAny>) -> TreeImpl {
+    pub fn add(&self, key: i64, value:T) -> TreeImpl<T> {
         match self {
             TreeImpl::Leaf {
                 key: k,
@@ -38,12 +38,12 @@ impl TreeImpl {
             } => {
                 if *k == key {
                     let mut new_values = values.clone();
-                    new_values.push(Arc::new(value));
+                    new_values.push(value);
                     TreeImpl::Leaf{ key: *k, values: new_values }
                 } else if *k > key {
-                    TreeImpl::Node {pivot: key, left: Arc::new(TreeImpl::Leaf{ key, values: vec![Arc::new(value)] }), right: Arc::new(self.clone())}
+                    TreeImpl::Node {pivot: key, left: Arc::new(TreeImpl::Leaf{ key, values: vec![value] }), right: Arc::new(self.clone())}
                 } else {
-                    TreeImpl::Node {pivot: *k, left: Arc::new(self.clone()), right: Arc::new(TreeImpl::Leaf{ key, values: vec![Arc::new(value)] })}
+                    TreeImpl::Node {pivot: *k, left: Arc::new(self.clone()), right: Arc::new(TreeImpl::Leaf{ key, values: vec![value] })}
                 }
             },
             TreeImpl::Node {
@@ -71,13 +71,13 @@ impl TreeImpl {
 
 #[pyclass(frozen)]
 #[gen_stub_pyclass]
-struct Tree(TreeImpl);
+struct Tree(TreeImpl<Arc<Py<PyAny>>>);
 
 #[pymethods]
 #[gen_stub_pymethods]
 impl Tree {
     fn add(&self, key: i64, val: Py<PyAny>) -> Self {
-        Tree(self.0.add(key, val))
+        Tree(self.0.add(key, Arc::new(val)))
     }
 
     fn search<'py>(&self, key: i64, python: Python<'py>) -> PyResult<Bound<'py, PyTuple>> {
