@@ -4,14 +4,27 @@
 import builtins
 import typing
 __all__ = [
+    "BenchmarkResults",
+    "Scenario",
     "Tree",
+    "benchmark_rust",
     "make_unit",
 ]
+
+@typing.final
+class BenchmarkResults:
+    ...
+
+@typing.final
+class Scenario:
+    ...
 
 @typing.final
 class Tree:
     def add(self, key: builtins.int, val: typing.Any) -> Tree: ...
     def search(self, key: builtins.int) -> tuple: ...
+
+def benchmark_rust(sizes: typing.Optional[typing.Sequence[builtins.int]] = None, n_queries: builtins.int = 10000, seed: builtins.int = 42, label: typing.Optional[builtins.str] = None) -> BenchmarkResults: ...
 
 def make_unit(key: builtins.int, val: typing.Any) -> Tree: ...
 

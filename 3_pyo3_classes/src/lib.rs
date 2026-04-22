@@ -4,6 +4,9 @@ use pyo3::types::PyTuple;
 use pyo3_stub_gen::define_stub_info_gatherer;
 use pyo3_stub_gen::derive::{gen_stub_pyclass, gen_stub_pyfunction, gen_stub_pymethods};
 
+mod benchmark;
+use benchmark::{BenchmarkResults, Scenario, benchmark_rust};
+
 #[derive(Clone)]
 enum TreeImpl<T:Clone> {
     Leaf{ key: i64, values: Vec<T>},
@@ -97,12 +100,14 @@ fn make_unit(key: i64, val: Py<PyAny>) -> Tree {
     Tree(TreeImpl::Leaf{ key, values: vec![Arc::new(val)] })
 }
 
-
 #[pymodule]
 #[pyo3(name = "native")]
 fn native(m: &Bound<PyModule>) -> PyResult<()> {
     m.add_class::<Tree>()?;
+    m.add_class::<Scenario>()?;
+    m.add_class::<BenchmarkResults>()?;
     m.add_function(wrap_pyfunction!(make_unit, m)?)?;
+    m.add_function(wrap_pyfunction!(benchmark_rust, m)?)?;
     Ok(())
 }
 

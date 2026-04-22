@@ -11,6 +11,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 pyo3 = "0.28.3"
 pyo3-stub-gen = "0.22.1"
+rand = { version = "0.8", features = ["small_rng"] }
 
 [[bin]]
 name = "stub_gen"

@@ -53,7 +53,7 @@ def _build(make_unit: MakeUnit, keys: list[int]):
 
 def benchmark(
         make_unit: MakeUnit,
-        sizes: tuple[int, ...] = (1_000, 10_000),
+        sizes: tuple[int, ...] ,
         n_queries: int = 10_000,
         seed: int = 42,
         label: str = "impl",
@@ -165,6 +165,11 @@ if __name__ == "__main__":
     from sys import setrecursionlimit
     setrecursionlimit(10005)
     from tree import Leaf
-    results_py = benchmark(lambda k, v: Leaf(k, (v,)), label="python")
-    results_rs = benchmark(make_unit, label="rust")
-    compare([results_py, results_rs])
+    from pyo3_classes.native import benchmark_rust
+
+    sizes = (1000, 5000)
+
+    results_py = benchmark(lambda k, v: Leaf(k, (v,)), label="python", sizes=sizes)
+    results_rs = benchmark(make_unit, label="rust", sizes=sizes)
+    results_rs_native = benchmark_rust(label="rust (native)", sizes=sizes)
+    compare([results_py, results_rs, results_rs_native])
