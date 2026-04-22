@@ -1,3 +1,7 @@
+- Motivation: fibbonacci and multithreading
+- How python works- interpreted bytecode = slow vs. just executing assembly
+- How memory works in systems languages work- stack is faster than heap, values can live directly on stack vs. Python objects live on heap
+- Problems caused by poor memory management in C
 - Intro to rust
   - Values vs references
   - Moving and lifetimes

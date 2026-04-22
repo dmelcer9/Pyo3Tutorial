@@ -314,6 +314,8 @@ debug/
 1_rust_safety/target
 2_simple_pyo3/target
 !/src/bin/
+!/2_simple_pyo3/src/bin/
+!/3_pyo3_classes/src/bin/
 !/configs/debug/
 
 wandb

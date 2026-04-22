@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/1_rust_safety/1_rust_safety.iml" filepath="$PROJECT_DIR$/1_rust_safety/1_rust_safety.iml" />
       <module fileurl="file://$PROJECT_DIR$/2_simple_pyo3/2_simple_pyo3_py.iml" filepath="$PROJECT_DIR$/2_simple_pyo3/2_simple_pyo3_py.iml" />
       <module fileurl="file://$PROJECT_DIR$/2_simple_pyo3/2_simple_pyo3_rs.iml" filepath="$PROJECT_DIR$/2_simple_pyo3/2_simple_pyo3_rs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3_pyo3_classes/3_pyo3_classes.iml" filepath="$PROJECT_DIR$/3_pyo3_classes/3_pyo3_classes.iml" />
       <module fileurl="file://$PROJECT_DIR$/Pyo3Tutorial.iml" filepath="$PROJECT_DIR$/Pyo3Tutorial.iml" />
     </modules>
   </component>
