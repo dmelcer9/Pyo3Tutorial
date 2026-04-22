@@ -4,7 +4,10 @@
 import builtins
 __all__ = [
     "fib",
+    "fib_detached",
 ]
 
 def fib(val: builtins.int) -> builtins.int: ...
+
+def fib_detached(val: builtins.int) -> builtins.int: ...
 

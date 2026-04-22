@@ -13,11 +13,17 @@ fn fib(val: u64) -> u64 {
 }
 
 
+#[pyfunction]
+#[gen_stub_pyfunction]
+fn fib_detached(val: u64, python: Python) -> u64 {
+    python.detach(|| fib(val))
+}
+
 #[pymodule]
 #[pyo3(name = "native")]
 fn native(m: &Bound<PyModule>) -> PyResult<()> {
-
     m.add_function(wrap_pyfunction!(fib, m)?)?;
+    m.add_function(wrap_pyfunction!(fib_detached, m)?)?;
     Ok(())
 }
 
